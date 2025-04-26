@@ -292,6 +292,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Load queue data initially
     loadQueueData();
     
-    // Refresh data every 10 seconds
-    setInterval(loadQueueData, 10000);
+    // Refresh data every 3 seconds
+    setInterval(loadQueueData, 3000);
 }); 
