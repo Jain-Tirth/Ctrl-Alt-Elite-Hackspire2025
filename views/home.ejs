@@ -63,16 +63,21 @@
 
 <div class="row mt-4">
     <div class="col-lg-12">
-        <div class="card bg-light">
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col-md-8">
-                        <h4>Current System Status</h4>
-                        <p class="mb-0">The queue management system is currently active and processing bookings.</p>
-                    </div>
-                    <div class="col-md-4 text-md-right mt-3 mt-md-0">
-                        <span class="badge badge-success p-2"><i class="fas fa-check-circle mr-1"></i> System Online</span>
-                    </div>
+        <div class="admin-dashboard" style="background-color: rgba(44, 62, 80, 0.9); border-radius: 16px; padding: 1.5rem; border: 1px solid rgba(62, 142, 237, 0.3); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);">
+            <div class="dashboard-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(221, 227, 236, 0.1);">
+                <h4 style="color: var(--accent); margin: 0;">Current System Status</h4>
+                <div class="dashboard-date" style="font-size: 0.9rem; color: var(--secondary);">
+                    <%= new Date().toLocaleDateString() %>
+                </div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <p class="mb-0" style="color: var(--light);">The queue management system is currently active and processing bookings.</p>
+                </div>
+                <div class="col-md-4 text-md-right mt-3 mt-md-0">
+                    <span style="background-color: rgba(0, 255, 179, 0.2); color: var(--accent); padding: 0.5rem 1rem; border-radius: 2rem; display: inline-block; border: 1px solid rgba(0, 255, 179, 0.3);">
+                        <i class="fas fa-check-circle mr-1"></i> System Online
+                    </span>
                 </div>
             </div>
         </div>
