@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= typeof title !== 'undefined' ? title : 'QueueWise' %> - QueueWise</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="/css/modern-style.css">
+    <%- typeof extraStyles !== 'undefined' ? extraStyles : '' %>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="/home">
+                    <span class="main-title">QueueWise</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/home"><i class="fas fa-home mr-1"></i> Home</a>
+                        </li>
+                        
+                        <% if (user && !user.isAdmin) { %>
+                        <!-- Regular user navigation -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="/booking"><i class="fas fa-calendar-check mr-1"></i> Book</a>
+                        </li>
+                        <% } %>
+                        
+                        <% if (user && user.isAdmin) { %>
+                        <!-- Admin navigation -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin"><i class="fas fa-cogs mr-1"></i> Admin Panel</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/analytics"><i class="fas fa-chart-line mr-1"></i> Analytics</a>
+                        </li>
+                        <% } %>
+                        
+                        <% if (user) { %>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-user-circle mr-1"></i> <%= user.username %>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="/profile"><i class="fas fa-id-card mr-2"></i>Profile</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/logout"><i class="fas fa-sign-out-alt mr-2"></i>Logout</a>
+                            </div>
+                        </li>
+                        <% } else { %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login"><i class="fas fa-sign-in-alt mr-1"></i> Login</a>
+                        </li>
+                        <% } %>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-5">
+        <div class="container">
+            <%- body %>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="mb-3 main-title">QueueWise</h5>
+                    <p class="text-muted mb-0">Intelligent queue management system with AI-powered wait time prediction.</p>
+                </div>
+                <div class="col-md-3">
+                    <h6 class="font-weight-bold mb-3">Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="/home" class="text-muted">Home</a></li>
+                        <% if (user && !user.isAdmin) { %>
+                        <li><a href="/booking" class="text-muted">Book</a></li>
+                        <% } %>
+                        <% if (user && user.isAdmin) { %>
+                        <li><a href="/admin" class="text-muted">Admin Panel</a></li>
+                        <li><a href="/analytics" class="text-muted">Analytics</a></li>
+                        <% } %>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6 class="font-weight-bold mb-3">Contact</h6>
+                    <ul class="list-unstyled text-muted">
+                        <li><i class="fas fa-envelope mr-2"></i>support@queuewise.com</li>
+                        <li><i class="fas fa-phone mr-2"></i>+1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i>123 Queue St, Waitville</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="small text-muted mb-0">&copy; 2023 QueueWise. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-right">
+                    <a href="#" class="text-muted mx-2"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-muted mx-2"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-muted mx-2"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-muted mx-2"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <%- typeof extraScripts !== 'undefined' ? extraScripts : '' %>
+</body>
+</html> 

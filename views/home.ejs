@@ -1,0 +1,88 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="jumbotron bg-gradient-primary text-white">
+            <h1 class="display-4">Welcome, <%= user.username %>!</h1>
+            <% if (user.isAdmin) { %>
+                <p class="lead">You are logged in as an administrator. Manage your queues and analyze wait times with our powerful tools.</p>
+                <hr class="my-4 bg-white-translucent">
+                <p>Access the admin panel to view current bookings or check analytics for insights.</p>
+                <a class="btn btn-light btn-lg mr-2" href="/admin" role="button">
+                    <i class="fas fa-cogs mr-2"></i>Admin Panel
+                </a>
+                <a class="btn btn-outline-light btn-lg" href="/analytics" role="button">
+                    <i class="fas fa-chart-line mr-2"></i>View Analytics
+                </a>
+            <% } else { %>
+                <p class="lead">Ready to skip the wait? Get an accurate prediction of your waiting time with our AI-powered system.</p>
+                <hr class="my-4 bg-white-translucent">
+                <p>Book your spot now and see how long you'll need to wait.</p>
+                <a class="btn btn-light btn-lg" href="/booking" role="button">
+                    <i class="fas fa-calendar-check mr-2"></i>Book Now
+                </a>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="text-center mb-3">
+                    <span class="fa-stack fa-2x">
+                        <i class="fas fa-circle fa-stack-2x text-primary-translucent"></i>
+                        <i class="fas fa-hourglass-half fa-stack-1x text-primary"></i>
+                    </span>
+                </div>
+                <h4 class="card-title text-center">Accurate Predictions</h4>
+                <p class="card-text">Our AI algorithm analyzes historical data and current conditions to provide precise waiting time estimates.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="text-center mb-3">
+                    <span class="fa-stack fa-2x">
+                        <i class="fas fa-circle fa-stack-2x text-primary-translucent"></i>
+                        <i class="fas fa-mobile-alt fa-stack-1x text-primary"></i>
+                    </span>
+                </div>
+                <h4 class="card-title text-center">Easy Booking</h4>
+                <p class="card-text">Simple and intuitive booking process that takes just a few seconds to complete.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="text-center mb-3">
+                    <span class="fa-stack fa-2x">
+                        <i class="fas fa-circle fa-stack-2x text-primary-translucent"></i>
+                        <i class="fas fa-chart-line fa-stack-1x text-primary"></i>
+                    </span>
+                </div>
+                <h4 class="card-title text-center">Analytics</h4>
+                <p class="card-text">Comprehensive analytics and insights to help optimize queue management and improve service.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-lg-12">
+        <div class="card bg-light">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h4>Current System Status</h4>
+                        <p class="mb-0">The queue management system is currently active and processing bookings.</p>
+                    </div>
+                    <div class="col-md-4 text-md-right mt-3 mt-md-0">
+                        <span class="badge badge-success p-2"><i class="fas fa-check-circle mr-1"></i> System Online</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

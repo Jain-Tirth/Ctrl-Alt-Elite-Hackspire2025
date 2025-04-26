@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QueueWise - Smart Queue Management</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="/css/modern-style.css">
+    <style>
+        /* Enhanced landing page dark theme styles */
+        body {
+            background-color: #0a0a0a;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            color: #f5f5f5;
+        }
+        
+        .hero-section {
+            position: relative;
+            background: linear-gradient(135deg, #8a2be2 0%, #4361ee 100%);
+            color: #f5f5f5;
+            padding: 140px 0 120px;
+            margin-bottom: 80px;
+            overflow: hidden;
+            border-radius: 0 0 50px 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -80px;
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            animation: float 20s infinite ease-in-out reverse;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(10px, 15px) rotate(5deg); }
+            50% { transform: translate(20px, 0px) rotate(0deg); }
+            75% { transform: translate(10px, -15px) rotate(-5deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+
+        #navbar {
+            background-color: rgba(10, 10, 10, 0.97);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+            border-bottom: 1px solid rgba(138, 43, 226, 0.1);
+        }
+
+        .navbar-solid {
+            background-color: rgba(15, 15, 15, 0.98) !important;
+        }
+        
+        .brand-highlight {
+            background: linear-gradient(135deg, #8a2be2 0%, #4cc9f0 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+            display: inline;
+            letter-spacing: 1px;
+            font-size: 1.8rem;
+        }
+
+        .animated-gradient-text {
+            background-size: 200% auto;
+            background: linear-gradient(90deg, #8a2be2, #4cc9f0, #8a2be2);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 5s linear infinite;
+            font-weight: 700;
+            text-shadow: 0 0 20px rgba(138, 43, 226, 0.3);
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .glow-on-hover {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .glow-on-hover::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+
+        .glow-on-hover:hover {
+            box-shadow: 0 0 25px rgba(138, 43, 226, 0.7);
+            transform: translateY(-3px);
+        }
+
+        .glow-on-hover:hover::after {
+            opacity: 1;
+        }
+        
+        .section-title {
+            font-weight: 700;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+            color: #f5f5f5;
+        }
+        
+        .section-title::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(135deg, #8a2be2 0%, #4cc9f0 100%);
+        }
+        
+        .card-overlay {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(138, 43, 226, 0.1);
+        }
+        
+        .card-overlay:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+        
+        .card-overlay::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.05) 0%, rgba(76, 201, 240, 0.05) 100%);
+            pointer-events: none;
+        }
+        
+        .navbar-light .navbar-nav .nav-link {
+            color: rgba(245, 245, 245, 0.8);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .navbar-light .navbar-nav .nav-link:hover {
+            color: #4cc9f0;
+        }
+        
+        .feature-card {
+            background: rgba(30, 30, 30, 0.6);
+            border-radius: 16px;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(138, 43, 226, 0.1);
+        }
+        
+        .feature-icon {
+            font-size: 45px;
+            margin-bottom: 25px;
+            background: linear-gradient(90deg, #8a2be2, #4cc9f0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+            padding: 10px;
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .bg-light {
+            background-color: rgba(20, 20, 20, 0.8) !important;
+            border-radius: 30px;
+            margin: 30px 0;
+            padding: 60px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Animated circles background */
+        .circles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .circles li {
+            position: absolute;
+            display: block;
+            list-style: none;
+            width: 20px;
+            height: 20px;
+            background: rgba(138, 43, 226, 0.1);
+            animation: animate 25s linear infinite;
+            bottom: -150px;
+            border-radius: 50%;
+        }
+        
+        .circles li:nth-child(1) {
+            left: 25%;
+            width: 80px;
+            height: 80px;
+            animation-delay: 0s;
+            animation-duration: 20s;
+        }
+        
+        .circles li:nth-child(2) {
+            left: 10%;
+            width: 20px;
+            height: 20px;
+            animation-delay: 2s;
+            animation-duration: 25s;
+        }
+        
+        .circles li:nth-child(3) {
+            left: 70%;
+            width: 40px;
+            height: 40px;
+            animation-delay: 4s;
+            animation-duration: 18s;
+        }
+        
+        .circles li:nth-child(4) {
+            left: 40%;
+            width: 60px;
+            height: 60px;
+            animation-delay: 0s;
+            animation-duration: 22s;
+        }
+        
+        .circles li:nth-child(5) {
+            left: 65%;
+            width: 20px;
+            height: 20px;
+            animation-delay: 0s;
+            animation-duration: 15s;
+        }
+        
+        @keyframes animate {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-1000px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        
+        .testimonial-img {
+            border: 3px solid #8a2be2;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.4);
+        }
+        
+        .cta-section {
+            position: relative;
+            background: linear-gradient(to right, rgba(20, 20, 20, 0.9), rgba(30, 30, 30, 0.9));
+            border-radius: 20px;
+            padding: 60px 0;
+            margin: 40px 0;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        footer {
+            background-color: #0a0a0a;
+            border-top: 1px solid rgba(138, 43, 226, 0.1);
+            padding: 70px 0 30px;
+        }
+        
+        .bg-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 35%, rgba(138, 43, 226, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 75% 80%, rgba(76, 201, 240, 0.03) 0%, transparent 50%);
+            z-index: -1;
+        }
+    </style>
+</head>
+<body data-spy="scroll" data-target="#navbar">
+    <div class="bg-image"></div>
+    <ul class="circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    
+    <!-- Navigation -->
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#"><span class="brand-highlight">QueueWise</span></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#how-it-works">How It Works</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#testimonials">Testimonials</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-primary px-4 mr-2" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary px-4 text-white" href="/register">Sign Up</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center hero-content">
+                <div class="col-lg-6">
+                    <h1 class="display-4 font-weight-bold mb-4">Smart <span class="animated-gradient-text">Queue Management</span> Made Simple</h1>
+                    <p class="lead mb-5">QueueWise uses AI to predict waiting times, helping businesses optimize customer flow and reduce wait times by up to 35%.</p>
+                    <a href="/register" class="btn btn-light btn-cta mr-3 glow-on-hover">Get Started</a>
+                    <a href="#how-it-works" class="btn btn-outline-light btn-cta">Learn More</a>
+                </div>
+                <div class="col-lg-6">
+                    <img src="https://via.placeholder.com/600x400" alt="Queue Management" class="img-fluid rounded shadow">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="section">
+        <div class="container">
+            <h2 class="text-center section-title">Why Choose QueueWise?</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card feature-card p-4 text-center card-overlay">
+                        <div class="card-body">
+                            <i class="fas fa-clock feature-icon"></i>
+                            <h4 class="card-title">Predictive Waiting Times</h4>
+                            <p class="card-text">Our AI model accurately predicts waiting times based on multiple factors including time of day, day of week, and current queue length.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card feature-card p-4 text-center card-overlay">
+                        <div class="card-body">
+                            <i class="fas fa-mobile-alt feature-icon"></i>
+                            <h4 class="card-title">Simple Booking System</h4>
+                            <p class="card-text">Customers can easily book their spots, receive estimated waiting times, and get notified when it's their turn.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card feature-card p-4 text-center card-overlay">
+                        <div class="card-body">
+                            <i class="fas fa-chart-line feature-icon"></i>
+                            <h4 class="card-title">Data Analytics</h4>
+                            <p class="card-text">Gain valuable insights into customer flow patterns, peak hours, and service efficiency to optimize your operations.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-4 mb-4">
+                    <div class="card feature-card p-4 text-center card-overlay">
+                        <div class="card-body">
+                            <i class="fas fa-user-tie feature-icon"></i>
+                            <h4 class="card-title">Admin Dashboard</h4>
+                            <p class="card-text">Comprehensive admin controls allow you to monitor queues, serve customers, and adjust service parameters.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card feature-card p-4 text-center card-overlay">
+                        <div class="card-body">
+                            <i class="fas fa-cloud feature-icon"></i>
+                            <h4 class="card-title">Cloud-Based Solution</h4>
+                            <p class="card-text">Access your queue system from anywhere with our secure cloud infrastructure backed by Firebase.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card feature-card p-4 text-center card-overlay">
+                        <div class="card-body">
+                            <i class="fas fa-cogs feature-icon"></i>
+                            <h4 class="card-title">Easy Integration</h4>
+                            <p class="card-text">QueueWise integrates seamlessly with your existing systems, requiring minimal setup and technical expertise.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="section bg-light">
+        <div class="container">
+            <h2 class="text-center section-title">How QueueWise Works</h2>
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="row align-items-center mb-5">
+                        <div class="col-md-6 order-md-2">
+                            <h3><span class="text-primary">1.</span> Customers Book Their Spot</h3>
+                            <p>Customers can register and book their spot in the queue through our user-friendly interface, specifying their preferred date and time.</p>
+                        </div>
+                        <div class="col-md-6 order-md-1">
+                            <div class="card-overlay">
+                                <img src="https://via.placeholder.com/500x300" alt="Booking Process" class="img-fluid rounded shadow">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row align-items-center mb-5">
+                        <div class="col-md-6">
+                            <h3><span class="text-primary">2.</span> AI Predicts Waiting Time</h3>
+                            <p>Our advanced AI algorithm analyzes multiple factors to provide accurate waiting time predictions, helping customers plan their visit efficiently.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card-overlay">
+                                <img src="https://via.placeholder.com/500x300" alt="AI Prediction" class="img-fluid rounded shadow">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col-md-6 order-md-2">
+                            <h3><span class="text-primary">3.</span> Business Dashboard</h3>
+                            <p>Businesses can monitor and manage their queue through an intuitive dashboard, serving customers efficiently and gathering valuable analytics.</p>
+                        </div>
+                        <div class="col-md-6 order-md-1">
+                            <div class="card-overlay">
+                                <img src="https://via.placeholder.com/500x300" alt="Business Dashboard" class="img-fluid rounded shadow">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="section">
+        <div class="container">
+            <h2 class="text-center section-title">What Our Customers Say</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card feature-card text-center p-4 card-overlay">
+                        <div class="card-body">
+                            <img src="https://via.placeholder.com/80" alt="Customer" class="testimonial-img mb-3">
+                            <h5>Sarah Johnson</h5>
+                            <p class="text-secondary">Restaurant Owner</p>
+                            <p>"QueueWise has transformed how we manage our waiting list. Our customers love knowing exactly when they'll be seated!"</p>
+                            <div class="text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card feature-card text-center p-4 card-overlay">
+                        <div class="card-body">
+                            <img src="https://via.placeholder.com/80" alt="Customer" class="testimonial-img mb-3">
+                            <h5>David Chen</h5>
+                            <p class="text-secondary">Clinic Manager</p>
+                            <p>"Since implementing QueueWise, patient satisfaction has increased by 40%. The waiting time predictions are remarkably accurate."</p>
+                            <div class="text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card feature-card text-center p-4 card-overlay">
+                        <div class="card-body">
+                            <img src="https://via.placeholder.com/80" alt="Customer" class="testimonial-img mb-3">
+                            <h5>Maria Rodriguez</h5>
+                            <p class="text-secondary">Salon Owner</p>
+                            <p>"QueueWise has streamlined our booking process and eliminated the chaos of our walk-in system. Our stylists and clients are both happier!"</p>
+                            <div class="text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2 class="mb-4">Ready to transform your queue management?</h2>
+                    <p class="lead mb-5">Join thousands of businesses that have improved customer satisfaction with QueueWise.</p>
+                    <a href="/register" class="btn btn-primary btn-cta mr-3 glow-on-hover">Get Started for Free</a>
+                    <a href="/login" class="btn btn-outline-primary btn-cta">Login</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-5">
+                    <h3 class="mb-4"><span class="brand-highlight">QueueWise</span></h3>
+                    <p>Smart queue management system powered by AI to help businesses optimize customer flow and reduce waiting times.</p>
+                    <div class="social-icons mt-4">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2 mb-5 footer-links">
+                    <h5>Company</h5>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Our Team</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-5 footer-links">
+                    <h5>Product</h5>
+                    <ul>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-5 footer-links">
+                    <h5>Resources</h5>
+                    <ul>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">API</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-5 footer-links">
+                    <h5>Legal</h5>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">GDPR</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 bg-dark">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="mb-0">&copy; 2023 QueueWise. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Navbar scroll effect
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 50) {
+                $('#navbar').addClass('navbar-solid');
+            } else {
+                $('#navbar').removeClass('navbar-solid');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        $('a[href*="#"]').not('[href="#"]').not('[href="#0"]').click(function(event) {
+            if (
+                location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && 
+                location.hostname == this.hostname
+            ) {
+                var target = $(this.hash);
+                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                if (target.length) {
+                    event.preventDefault();
+                    $('html, body').animate({
+                        scrollTop: target.offset().top - 70
+                    }, 1000);
+                }
+            }
+        });
+    </script>
+</body>
+</html> 

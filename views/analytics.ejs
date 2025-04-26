@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QueueWise - Analytics Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="/css/modern-style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container-fluid mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-11">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h1 class="main-title">QueueWise Analytics</h1>
+                        <p class="text-muted">Comprehensive Queue & Service Time Analysis</p>
+                    </div>
+                    <div>
+                        <a href="/admin" class="btn btn-outline-primary mr-2">
+                            <i class="fas fa-cogs mr-1"></i> Admin Panel
+                        </a>
+                        <a href="/logout" class="btn btn-outline-danger">
+                            <i class="fas fa-sign-out-alt mr-1"></i> Logout
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="card stats-card bg-gradient-primary text-white">
+                            <div class="card-body text-center">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h5 class="text-white-50 mb-1">Waiting</h5>
+                                        <h1 id="total-waiting" class="stats-value">-</h1>
+                                    </div>
+                                    <div class="icon-circle bg-white-translucent">
+                                        <i class="fas fa-user-clock fa-lg text-white"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card stats-card bg-gradient-warning text-white">
+                            <div class="card-body text-center">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h5 class="text-white-50 mb-1">Processing</h5>
+                                        <h1 id="total-processing" class="stats-value">-</h1>
+                                    </div>
+                                    <div class="icon-circle bg-white-translucent">
+                                        <i class="fas fa-spinner fa-lg text-white"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card stats-card bg-gradient-success text-white">
+                            <div class="card-body text-center">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h5 class="text-white-50 mb-1">Served</h5>
+                                        <h1 id="total-served" class="stats-value">-</h1>
+                                    </div>
+                                    <div class="icon-circle bg-white-translucent">
+                                        <i class="fas fa-check-circle fa-lg text-white"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card stats-card bg-gradient-info text-white">
+                            <div class="card-body text-center">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h5 class="text-white-50 mb-1">Total Dates</h5>
+                                        <h1 id="total-dates" class="stats-value">-</h1>
+                                    </div>
+                                    <div class="icon-circle bg-white-translucent">
+                                        <i class="fas fa-calendar-day fa-lg text-white"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <!-- Peak Hours Chart -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-white">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h4 class="mb-0"><i class="fas fa-chart-line mr-2 text-info"></i>Peak Hours Analysis</h4>
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="peakHoursDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-calendar-alt mr-1"></i> Filter
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="peakHoursDropdown">
+                                            <a class="dropdown-item" href="#">All Time</a>
+                                            <a class="dropdown-item" href="#">This Week</a>
+                                            <a class="dropdown-item" href="#">This Month</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container">
+                                    <canvas id="peakHoursChart"></canvas>
+                                </div>
+                                <div class="text-center text-muted">
+                                    <small>Distribution of bookings by hour of day across all dates</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <!-- Visitors by Date Chart -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-white">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h4 class="mb-0"><i class="fas fa-users mr-2 text-success"></i>Visitors by Date</h4>
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="visitorsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-filter mr-1"></i> Filter
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="visitorsDropdown">
+                                            <a class="dropdown-item" href="#">All Dates</a>
+                                            <a class="dropdown-item" href="#">Last 7 Days</a>
+                                            <a class="dropdown-item" href="#">Last 30 Days</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container">
+                                    <canvas id="visitorsChart"></canvas>
+                                </div>
+                                <div class="text-center text-muted">
+                                    <small>Total visitors and service completion for each date</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mb-4">
+                    <div class="card-header bg-white">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h4 class="mb-0"><i class="fas fa-calendar mr-2 text-primary"></i>Queue Analytics by Date</h4>
+                            <span class="live-indicator">Auto-updating every 10 seconds</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="queues-container" class="row">
+                            <div class="col-12 text-center">
+                                <div class="loader"></div>
+                                <p>Loading queue data...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="/js/analytics.js"></script>
+    
+    <style>
+        /* Additional styles specifically for the analytics page */
+        .bg-gradient-primary {
+            background: linear-gradient(45deg, #4a6bff, #7239ea);
+        }
+        
+        .bg-gradient-warning {
+            background: linear-gradient(45deg, #ffa800, #f86b07);
+        }
+        
+        .bg-gradient-success {
+            background: linear-gradient(45deg, #1bc5bd, #0bb7af);
+        }
+        
+        .bg-gradient-info {
+            background: linear-gradient(45deg, #8950fc, #7337ee);
+        }
+        
+        .text-white-50 {
+            color: rgba(255, 255, 255, 0.5) !important;
+        }
+        
+        .icon-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        .bg-white-translucent {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</body>
+</html> 
