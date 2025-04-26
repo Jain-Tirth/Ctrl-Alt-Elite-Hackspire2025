@@ -1,43 +1,36 @@
 {
-  "name": "my-v0-project",
-  "version": "0.1.0",
-  "private": true,
+  "name": "hackspiremodelpage",
+  "version": "1.0.0",
+  "description": "Organization booking system with waiting time prediction",
+  "main": "app.js",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [
+    "booking",
+    "prediction",
+    "queue",
+    "machine-learning"
+  ],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "@hookform/resolvers": "^3.9.1",
-    "@prisma/client": "^6.6.0",
-    "ably": "^2.7.0",
-    "appwrite": "^17.0.2",
-    "autoprefixer": "^10.4.20",
-    "bcrypt": "^5.1.1",
-    "bcryptjs": "^3.0.2",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "css": "^3.0.0",
-    "date-fns": "3.6.0",
-    "lucide-react": "^0.454.0",
-    "next": "14.1.0",
-    "next-themes": "^0.4.4",
-    "prisma": "^6.6.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-hook-form": "^7.54.1",
-    "tailwind": "^4.0.0",
-    "tailwind-merge": "^2.5.5",
-    "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.24.1"
+    "body-parser": "^1.19.0",
+    "ejs": "^3.1.6",
+    "ejs-layouts": "^0.0.1",
+    "express": "^4.17.1",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.18.1",
+    "firebase": "^9.23.0",
+    "fs-extra": "^10.0.0",
+    "multer": "^1.4.3",
+    "node-pickle": "0.0.2",
+    "pandas": "0.0.3",
+    "pickle": "^0.2.0"
   },
   "devDependencies": {
-    "@types/node": "22.15.2",
-    "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.2.0",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.17",
-    "typescript": "5.8.3"
+    "nodemon": "^2.0.15"
   }
 }

@@ -1,55 +1,99 @@
-# 🚀 QueueWise Pro – Smart Queue Management System
-No more long waits, no more chaos. Smarter, faster, and predictive queue management powered by AI.
+# Organization Booking System
 
-## 🧩 Project Overview
-QueueWise Pro is an AI-powered smart queue management solution that:
+This is a web application for managing organization bookings with waiting time prediction using a machine learning model.
 
-Predicts waiting times dynamically
+## Features
 
-Optimizes customer flow in real-time
+- User booking form for date and time selection
+- Admin panel for system configuration
+- Integration with Firebase for real-time database
+- Waiting time prediction using ML model (Python or JavaScript fallback)
+- Display of all model input parameters used for prediction
 
-Alerts users when their turn is approaching
+## Setup Instructions
 
-Provides admin dashboards to monitor KPIs
+### Prerequisites
 
-Ensures a seamless, stress-free queuing experience for both users and staff
+- Node.js (v12.x or later)
+- Python (v3.6 or later)
+- Firebase account and project
 
-Whether it's hospitals, banks, or public offices — QueueWise Pro adapts to serve.
+### Installation
 
-## 🎯 Key Features
-📈 Wait Time Prediction (Statistical or ML model-based)
+1. Clone this repository
+2. Install Node.js dependencies:
 
-⏳ Real-Time Queue Updates via Web and Mobile
+```bash
+npm install
+```
 
-🖥️ Admin KPI Dashboard (Peak hours, average wait times, queue length, etc.)
+3. Install Python dependencies:
 
-📲 Smart Notifications to users (via web or mobile alerts)
+```bash
+pip install pandas scikit-learn pickle-mixin
+```
 
-🧠 Queue Analytics and reports for performance improvement
+4. Configure Firebase:
+   - Create a Firebase project at https://console.firebase.google.com/
+   - Set up a Realtime Database
+   - Add your Firebase configuration to:
+     - `app.js` (for server)
+     - `public/js/admin.js` (for client)
 
-🏢 Multi-Counter and Multi-Location Support
+5. Set up your machine learning model:
+   - Place your model files in the `/models` directory:
+     - `best_waiting_time_model.pkl` (the trained model)
+     - `label_encoders.pkl` (categorical encoders)
+     - `scaler.pkl` (feature scaler)
+     - `feature_columns.pkl` (column order)
 
-🔥 Live 3D Interactive Landing Page (Rotating service center visualization)
+6. Start the server:
 
-## 📊 KPI Dashboard Metrics (Admin View)
-Total Visitors Today
+```bash
+npm start
+```
 
-Average Waiting Time
+7. Visit http://localhost:3000 in your browser
 
-Peak Hours
+## Python Model Integration
 
-Active Service Counters
+The application is designed to use Python for model predictions:
 
-Current Queue Length
+1. The `predict.py` script is used to load and run the model
+2. Node.js calls this script as a child process
+3. Data is passed via JSON strings and command line arguments
+4. Results are returned to Node.js via stdout
+5. A JavaScript fallback model is used if Python execution fails
 
-Customer Satisfaction Score (CSAT)
+### Troubleshooting Python Integration
 
-## 🛠️ Tech Stack
+If you encounter issues with Python integration:
 
-Layer	Technology
-Frontend: 	React.js, Tailwind CSS, Three.js (for 3D landing page)
-Backend: 	Node.js, Express.js
-Real-Time Communication: Socket.IO
-Database: Firebase Firestore
-Authentication	Firebase Auth or JWT
-Hosting	Vercel (Frontend) + Railway/Render (Backend)
+1. Ensure Python is in your PATH environment variable
+2. Check that you have the required Python packages installed
+3. Verify model file paths in `predict.py`
+4. Test the Python script directly:
+
+```bash
+python predict.py '{"date":"2023-05-15","time":"14:30","current_queue_length":5,"average_service_time":5.5,"time_of_day":"Afternoon","day_of_week":"Monday","is_holiday":0,"customer_type_mix":"Mixed","weather_condition":"Sunny","recent_incident":0,"special_offer_running":0}'
+```
+
+## Model Parameters
+
+The following parameters are required for the prediction model:
+
+- `date`: Selected date
+- `time`: Selected time
+- `current_queue_length`: Number of people in queue (calculated from database)
+- `average_service_time`: Average time to serve a customer (from past data or default 5.5)
+- `time_of_day`: Morning/Afternoon/Evening/Night (derived from time)
+- `day_of_week`: Day of the week (derived from date)
+- `is_holiday`: 0 or 1 (set by admin)
+- `customer_type_mix`: Random from options
+- `weather_condition`: Random from options
+- `recent_incident`: Always 0
+- `special_offer_running`: 0 or 1 (set by admin)
+
+## License
+
+MIT 
