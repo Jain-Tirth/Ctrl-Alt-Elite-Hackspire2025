@@ -1,0 +1,9 @@
+{
+  "/api/queue-data/route": "app/api/queue-data/route.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/signup/page": "app/signup/page.js",
+  "/docs/page": "app/docs/page.js",
+  "/page": "app/page.js",
+  "/login/page": "app/login/page.js",
+  "/analytics/page": "app/analytics/page.js"
+}
