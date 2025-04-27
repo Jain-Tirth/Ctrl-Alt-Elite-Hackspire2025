@@ -3,20 +3,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let peakHoursChart = null;
     let visitorsChart = null;
     
-    // Function to fetch Firebase configuration from server (in case we need it)
-    async function getFirebaseConfig() {
-        try {
-            const response = await fetch('/api/firebase-config');
-            if (!response.ok) {
-                throw new Error('Failed to fetch Firebase configuration');
-            }
-            return await response.json();
-        } catch (error) {
-            console.error('Error fetching Firebase configuration:', error);
-            return null;
-        }
-    }
-    
     // Function to load queue data by date
     function loadQueueData() {
         fetch('/api/queues')
