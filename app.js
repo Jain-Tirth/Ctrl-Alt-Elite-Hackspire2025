@@ -22,6 +22,9 @@ const {
 // We'll use this for fallback but prefer the Python model
 const { predictWaitingTime: predictWaitingTimeJS } = require('./model');
 
+// Import configuration from config.js
+const { firebaseConfig, appConfig } = require('./config');
+
 const app = express();
 const port = process.env.PORT || 3001; // Changed to 3001 to avoid conflicts
 
@@ -61,18 +64,6 @@ const upload = multer({
   }
 });
 
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyAdQco43lX5_FvsMevpEcTIppSU5SPY0XI",
-  authDomain: "queuewise-pro.firebaseapp.com",
-  databaseURL: "https://queuewise-pro-default-rtdb.firebaseio.com",
-  projectId: "queuewise-pro",
-  storageBucket: "queuewise-pro.firebasestorage.app",
-  messagingSenderId: "530268740026",
-  appId: "1:530268740026:web:c0b1b2206ce4a6c578a583",
-  measurementId: "G-YQ8MV32ZBR"
-};
-
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 const database = getDatabase(firebaseApp);
@@ -108,7 +99,7 @@ app.use((req, res, next) => {
 
 // Initialize session middleware
 app.use(session({
-  secret: 'queuewise-secret-key',
+  secret: appConfig.sessionSecret,
   resave: false,
   saveUninitialized: true,
   cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 } // 24 hours
@@ -763,8 +754,13 @@ app.get('/api/queue', isAuthenticated, async (req, res) => {
   }
 });
 
-// New API endpoint to get queue status by date - admin only
-app.get('/api/queues', isAuthenticated, async (req, res) => {
+// API endpoint to provide Firebase configuration to the client
+app.get('/api/firebase-config', isAuthenticated, (req, res) => {
+  res.json(firebaseConfig);
+});
+
+// API endpoint to fetch queue data for analytics
+app.get('/api/queues', isAuthenticated, isAdmin, async (req, res) => {
   // Only allow admin access
   if (!req.session.user.isAdmin) {
     return res.status(403).json({ error: 'Access denied. Admin rights required.' });
@@ -923,13 +919,20 @@ app.post('/book', isAuthenticated, async (req, res) => {
   }
 });
 
-
-
 // Start the queue simulation
 startQueueSimulation();
 
 // Start the server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
+  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+  
+  // Log a message about environment configuration
+  if (!process.env.FIREBASE_API_KEY) {
+    console.log('\x1b[33m%s\x1b[0m', 'WARNING: Using default Firebase configuration. For production, set up environment variables.');
+    console.log('\x1b[36m%s\x1b[0m', 'Run node setup-env.js to create a template .env file.');
+  } else {
+    console.log('\x1b[32m%s\x1b[0m', 'Using environment variables for Firebase configuration.');
+  }
   startQueueSimulation();
 });
