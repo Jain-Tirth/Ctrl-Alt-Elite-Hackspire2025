@@ -234,41 +234,7 @@ html, body {
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 255, 179, 0.2);
 }
 
-.scene-stats {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  max-width: 600px;
-  margin-top: 1rem;
-}
-
-.stat-item {
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.3);
-  padding: 1rem;
-  border-radius: 0.5rem;
-  border: 1px solid rgba(62, 142, 237, 0.2);
-  transition: var(--transition);
-  min-width: 100px;
-}
-
-.stat-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 255, 179, 0.2);
-  border-color: var(--accent);
-}
-
-.stat-value {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--accent);
-  margin-bottom: 0.5rem;
-}
-
-.stat-label {
-  font-size: 0.9rem;
-  color: var(--secondary);
-}
+/* Stats section removed as requested */
 
 /* Features Section */
 .features-section {
