@@ -33,13 +33,12 @@ npm install
 pip install pandas scikit-learn pickle-mixin
 ```
 
-4. Set up environment variables:
-   - Run the setup script to create a template .env file:
-   ```bash
-   node setup-env.js
-   ```
-   - Fill in your Firebase configuration in the .env file
-   - Make sure to never commit your .env file to version control (it's added to .gitignore)
+4. Configure Firebase:
+   - Create a Firebase project at https://console.firebase.google.com/
+   - Set up a Realtime Database
+   - Add your Firebase configuration to:
+     - `app.js` (for server)
+     - `public/js/admin.js` (for client)
 
 5. Set up your machine learning model:
    - Place your model files in the `/models` directory:
@@ -55,10 +54,6 @@ npm start
 ```
 
 7. Visit http://localhost:3000 in your browser
-
-## Security Notes
-
-The application uses environment variables to store Firebase configuration, ensuring sensitive credentials are not exposed in the repository. For development purposes, the config.js file includes fallback values, but these should be replaced with your own Firebase configuration in the .env file for deployment.
 
 ## Python Model Integration
 
